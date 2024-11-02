@@ -1,0 +1,4 @@
+TZ=Asia/Jakarta
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=dating_app

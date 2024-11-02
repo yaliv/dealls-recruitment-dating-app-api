@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
+
+	"yaliv/dating-app-api/configs/env"
 )
 
 var (
@@ -9,6 +11,7 @@ var (
 )
 
 func main() {
+	// App.
 	app := fiber.New()
 
 	app.Get("/info", func(c *fiber.Ctx) error {
@@ -18,5 +21,5 @@ func main() {
 		})
 	})
 
-	app.Listen(":3000")
+	app.Listen(env.AppListenAddr)
 }

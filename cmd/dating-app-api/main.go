@@ -8,6 +8,7 @@ import (
 
 	"yaliv/dating-app-api/configs/env"
 	"yaliv/dating-app-api/internal/db"
+	v1router "yaliv/dating-app-api/internal/routers/v1"
 )
 
 var (
@@ -31,6 +32,8 @@ func main() {
 			"app_version": appVersion,
 		})
 	})
+
+	app.Mount("/v1", v1router.Router())
 
 	app.Listen(env.AppListenAddr)
 }

@@ -1,9 +1,13 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 
 	"yaliv/dating-app-api/configs/env"
+	"yaliv/dating-app-api/internal/db"
 )
 
 var (
@@ -11,6 +15,13 @@ var (
 )
 
 func main() {
+	// Database.
+	fmt.Println("Membuka koneksi basisdata.")
+	if err := db.Open(); err != nil {
+		log.Fatal("Error membuka koneksi basisdata --", err)
+	}
+	defer db.Close()
+
 	// App.
 	app := fiber.New()
 

@@ -12,6 +12,7 @@ import (
 
 var (
 	AppListenAddr string
+	DatabaseUrl   string
 )
 
 func init() {
@@ -28,4 +29,5 @@ func init() {
 		log.SetLevel(log.LevelError)
 	}
 	AppListenAddr = os.Getenv("DATING_APP_API_LISTEN_ADDR")
+	DatabaseUrl = os.Getenv("DATABASE_URL")
 }

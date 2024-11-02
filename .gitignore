@@ -26,3 +26,6 @@ go.work.sum
 
 # temporary dir
 /tmp
+
+# docker configuration files
+/docker/*.cfg

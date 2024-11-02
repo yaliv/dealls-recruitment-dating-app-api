@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:17.0
+    restart: always
+    ports:
+      - ${POSTGRES_HOSTPORT}:5432
+    volumes:
+      - type: volume
+        source: pg17_data
+        target: /var/lib/postgresql/data
+    env_file: ./docker/postgres.cfg
+volumes:
+  pg17_data:

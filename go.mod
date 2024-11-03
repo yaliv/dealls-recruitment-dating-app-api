@@ -8,12 +8,14 @@ require (
 	github.com/go-rel/postgres v0.12.0
 	github.com/go-rel/rel v0.42.0
 	github.com/gofiber/fiber/v2 v2.52.5
+	github.com/gofiber/jwt/v4 v4.0.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.9
 )
 
 require (
+	github.com/MicahParks/keyfunc/v2 v2.0.3 // indirect
 	github.com/andybalholm/brotli v1.1.1 // indirect
 	github.com/go-rel/sql v0.17.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect

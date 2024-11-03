@@ -3,6 +3,7 @@ module yaliv/dating-app-api
 go 1.23.2
 
 require (
+	github.com/alexedwards/argon2id v1.0.0
 	github.com/buger/jsonparser v1.1.1
 	github.com/go-rel/postgres v0.12.0
 	github.com/go-rel/rel v0.42.0
@@ -26,6 +27,7 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.57.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
+	golang.org/x/crypto v0.28.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.26.0 // indirect
 )

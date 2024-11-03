@@ -54,8 +54,8 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	jwtClaims := jwt.MapClaims{
-		"iss":   "parking-api",
-		"aud":   "parking-api",
+		"iss":   "dating-app-api",
+		"aud":   "dating-app-api",
 		"sub":   user.ID,
 		"email": user.Email,
 	}

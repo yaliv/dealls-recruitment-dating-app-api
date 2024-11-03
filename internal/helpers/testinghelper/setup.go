@@ -5,7 +5,10 @@ import (
 	"flag"
 	"testing"
 
+	"github.com/golang-jwt/jwt/v5"
+
 	"yaliv/dating-app-api/configs/env"
+	"yaliv/dating-app-api/internal/crypto/jwtutil"
 	"yaliv/dating-app-api/internal/crypto/signingkey"
 	"yaliv/dating-app-api/internal/db"
 )
@@ -47,4 +50,19 @@ func SeedData() {
 
 	db.Client.MustInsertAll(dbCtx, &userSeeds)
 	db.Client.MustInsertAll(dbCtx, &userProfileSeeds)
+}
+
+func GetAuthorization(t *testing.T, userId int) string {
+	jwtClaims := jwt.MapClaims{
+		"iss": "dating-app-api",
+		"aud": "dating-app-api",
+		"sub": userId,
+	}
+
+	accessToken, _, err := jwtutil.Sign(jwtClaims)
+	if err != nil {
+		t.Fatal("Error membuat access token --", err)
+	}
+
+	return "Bearer " + accessToken
 }

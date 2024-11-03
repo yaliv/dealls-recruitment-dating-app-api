@@ -30,7 +30,7 @@ func New() fiber.Handler {
 func Subject(c *fiber.Ctx) int {
 	user := c.Locals("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
-	sub := claims["sub"].(int)
+	sub := int(claims["sub"].(float64))
 
 	return sub
 }

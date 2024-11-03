@@ -5,6 +5,7 @@ import (
 
 	"yaliv/dating-app-api/internal/handlers/access"
 	"yaliv/dating-app-api/internal/handlers/access/accessform"
+	"yaliv/dating-app-api/internal/handlers/authorization"
 	"yaliv/dating-app-api/internal/handlers/registration"
 	"yaliv/dating-app-api/internal/handlers/registration/registrationform"
 )
@@ -18,6 +19,9 @@ func Router() *fiber.App {
 
 	rAcc := r1.Group("/access")
 	rAcc.Post("", accessform.ParseLogin, access.Login)
+
+	// All routes below this middleware need Access Token.
+	r1.Use(authorization.New())
 
 	return r1
 }

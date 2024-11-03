@@ -14,6 +14,7 @@ var (
 	DatabaseUrl      string
 	Argon2Memory     uint32
 	Argon2Iterations uint32
+	SecretsDir       string
 )
 
 func Setup(envFilename string) {
@@ -34,4 +35,5 @@ func Setup(envFilename string) {
 	if v, err := strconv.Atoi(os.Getenv("DATING_APP_API_ARGON2_ITERATIONS")); err == nil {
 		Argon2Iterations = uint32(v)
 	}
+	SecretsDir = os.Getenv("DATING_APP_API_SECRETS_DIR")
 }

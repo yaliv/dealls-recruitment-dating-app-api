@@ -3,6 +3,7 @@ module yaliv/dating-app-api
 go 1.23.2
 
 require (
+	github.com/buger/jsonparser v1.1.1
 	github.com/go-rel/postgres v0.12.0
 	github.com/go-rel/rel v0.42.0
 	github.com/gofiber/fiber/v2 v2.52.5

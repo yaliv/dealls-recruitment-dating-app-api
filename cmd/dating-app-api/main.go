@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2/log"
 
 	"yaliv/dating-app-api/configs/env"
+	"yaliv/dating-app-api/internal/crypto/signingkey"
 	"yaliv/dating-app-api/internal/db"
 	v1router "yaliv/dating-app-api/internal/routers/v1"
 )
@@ -29,6 +30,9 @@ func main() {
 		log.Fatal("Error membuka koneksi basisdata --", err)
 	}
 	defer db.Close()
+
+	// Signing key (for JWT).
+	signingkey.SetupKeypair()
 
 	// App.
 	app := fiber.New()

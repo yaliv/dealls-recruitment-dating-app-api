@@ -10,8 +10,10 @@ import (
 )
 
 var (
-	AppListenAddr string
-	DatabaseUrl   string
+	AppListenAddr    string
+	DatabaseUrl      string
+	Argon2Memory     uint32
+	Argon2Iterations uint32
 )
 
 func Setup(envFilename string) {
@@ -26,4 +28,10 @@ func Setup(envFilename string) {
 	}
 	AppListenAddr = os.Getenv("DATING_APP_API_LISTEN_ADDR")
 	DatabaseUrl = os.Getenv("DATABASE_URL")
+	if v, err := strconv.Atoi(os.Getenv("DATING_APP_API_ARGON2_MEMORY")); err == nil {
+		Argon2Memory = uint32(v)
+	}
+	if v, err := strconv.Atoi(os.Getenv("DATING_APP_API_ARGON2_ITERATIONS")); err == nil {
+		Argon2Iterations = uint32(v)
+	}
 }

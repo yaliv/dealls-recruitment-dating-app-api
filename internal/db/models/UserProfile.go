@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type UserProfiles struct {
+type UserProfile struct {
 	ID        int
 	CreatedAt time.Time
 	UpdatedAt time.Time

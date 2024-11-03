@@ -11,20 +11,23 @@ func toPtr[T any](s T) *T { return &s }
 var (
 	users = []models.Users{
 		{
-			ID:     1,
-			Email:  "MimosaBurrows@jourrapide.com",
-			Secret: "Husoh0EeP",
+			ID:    1,
+			Email: "MimosaBurrows@jourrapide.com",
+			// Husoh0EeP
+			Secret: "$argon2id$v=19$m=102400,t=1,p=24$T91Cs6CzhJcz3NZ39VJofg$gQoHGyxgwDMPnVEEIQ1kOhFLHUFxH1Zg",
 		},
 		{
-			ID:     2,
-			Email:  "AdelgrimGoldworthy@armyspy.com",
-			Secret: "Aeto9pi4ko",
+			ID:    2,
+			Email: "AdelgrimGoldworthy@armyspy.com",
+			// Aeto9pi4ko
+			Secret: "$argon2id$v=19$m=102400,t=1,p=24$WvZu8Wr4YdLrsMwFMwNmtg$GhSXSnrKuUaRL9+tLi1Tni7ANMka2LgT",
 		},
 		{
 			ID:            3,
 			DeactivatedAt: toPtr(time.Now()),
 			Email:         "DiamandaHornblower@dayrep.com",
-			Secret:        "iZ2mohghae",
+			// iZ2mohghae
+			Secret: "$argon2id$v=19$m=102400,t=1,p=24$jWT/D7tS5HrprYJ5eZSh7Q$aPM+/+saAgptvwNJqYE4zxvvUvAlXhul",
 		},
 	}
 

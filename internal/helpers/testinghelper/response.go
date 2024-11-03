@@ -34,7 +34,11 @@ func CheckSuccess(t *testing.T, resBody []byte) {
 	}
 }
 
-func CheckData(t *testing.T, resBody []byte, tests DataTests) {
+func CheckData(t *testing.T, resBody []byte, tests DataTests, keys ...string) {
+	if len(keys) == 0 {
+		keys = append(keys, "data")
+	}
+
 	err := jsonparser.ObjectEach(resBody, func(k, v []byte, vt jsonparser.ValueType, o int) error {
 		key := string(k)
 		val := string(v)
@@ -49,7 +53,7 @@ func CheckData(t *testing.T, resBody []byte, tests DataTests) {
 		}
 
 		return nil
-	}, "data")
+	}, keys...)
 
 	if err != nil {
 		t.Error("data doesn't exist")

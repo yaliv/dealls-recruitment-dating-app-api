@@ -9,7 +9,7 @@ import (
 func toPtr[T any](s T) *T { return &s }
 
 var (
-	users = []models.User{
+	userSeeds = []models.User{
 		{
 			ID:    1,
 			Email: "MimosaBurrows@jourrapide.com",
@@ -31,7 +31,7 @@ var (
 		},
 	}
 
-	userProfiles = []models.UserProfile{
+	userProfileSeeds = []models.UserProfile{
 		{
 			ID:       1,
 			UserID:   1,

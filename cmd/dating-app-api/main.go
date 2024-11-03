@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
@@ -16,6 +17,12 @@ var (
 )
 
 func main() {
+	envFilename := flag.String("envfile", ".env", ".env filename to load ENV vars from (default \".env\")")
+	flag.Parse()
+
+	// Environment variables.
+	env.Setup(*envFilename)
+
 	// Database.
 	fmt.Println("Membuka koneksi basisdata.")
 	if err := db.Open(); err != nil {

@@ -1,7 +1,6 @@
 package env
 
 import (
-	"flag"
 	stdlog "log"
 	"os"
 	"strconv"
@@ -15,11 +14,8 @@ var (
 	DatabaseUrl   string
 )
 
-func init() {
-	envFilename := flag.String("envfile", ".env", ".env filename to load ENV vars from (default \".env\")")
-	flag.Parse()
-
-	if err := godotenv.Load(*envFilename); err != nil {
+func Setup(envFilename string) {
+	if err := godotenv.Load(envFilename); err != nil {
 		stdlog.Println("Tidak bisa membaca konfigurasi variabel env. Hanya akan menggunakan variabel env yang diset dari sistem.")
 	}
 

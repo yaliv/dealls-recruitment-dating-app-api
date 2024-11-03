@@ -48,5 +48,5 @@ air
 **Note:** You don't need to run app before running the tests.
 
 ```
-go test -v ./internal/handlers/... -args -envfile=$(pwd)/.env.testing
+go test -v -p=1 ./internal/handlers/... -args -envfile=$(pwd)/.env.testing
 ```

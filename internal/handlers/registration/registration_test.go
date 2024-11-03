@@ -65,7 +65,7 @@ func TestUserStatus(t *testing.T) {
 
 func TestRegister(t *testing.T) {
 	testinghelper.MainSetup(t)
-	testinghelper.ClearData(t)
+	testinghelper.ClearData()
 
 	app := fiber.New()
 

@@ -17,8 +17,8 @@ var (
 
 func CompleteSetup(t *testing.T) {
 	MainSetup(t)
-	ClearData(t)
-	SeedData(t)
+	ClearData()
+	SeedData()
 }
 
 func MainSetup(t *testing.T) {
@@ -35,14 +35,14 @@ func MainSetup(t *testing.T) {
 	}
 }
 
-func ClearData(t *testing.T) {
+func ClearData() {
 	dbCtx := context.Background()
 
 	db.Client.MustExec(dbCtx, "TRUNCATE TABLE users RESTART IDENTITY CASCADE")
 	db.Client.MustExec(dbCtx, "TRUNCATE TABLE premium_features RESTART IDENTITY CASCADE")
 }
 
-func SeedData(t *testing.T) {
+func SeedData() {
 	dbCtx := context.Background()
 
 	db.Client.MustInsertAll(dbCtx, &userSeeds)

@@ -11,10 +11,10 @@ Dealls dev recruitment test 2024: Dating App API.
 
 Create configuration files:
 
-- Copy `.env.example` to `.env`. Set DB user and password.
+- Copy `.env.example` to `.env` and `.env.testing`. Set DB user and password. You might also want to use different DB for testing.
 - Copy `docker/postgres.cfg.example` to `docker/postgres.cfg`. Set DB user and password.
 
-Download install dependencies:
+Download/install dependencies:
 
 ```
 # Start dependency containers, like PostgreSQL database
@@ -34,10 +34,19 @@ go install github.com/air-verse/air@latest
 
 ```
 rel migrate -dir=rel/migrations
+rel migrate -dir=rel/migrations -dsn=<your testing DATABASE_URL>
 ```
 
-## Run with live reload
+## Run app with live reload
 
 ```
 air
+```
+
+## Run tests on API handlers
+
+**Note:** You don't need to run app before running the tests.
+
+```
+go test -v ./internal/handlers/... -args -envfile=$(pwd)/.env.testing
 ```

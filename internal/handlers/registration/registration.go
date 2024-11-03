@@ -8,8 +8,10 @@ import (
 	"github.com/go-rel/rel/where"
 	"github.com/gofiber/fiber/v2"
 
+	"yaliv/dating-app-api/internal/crypto/pwdutil"
 	"yaliv/dating-app-api/internal/db"
 	"yaliv/dating-app-api/internal/db/models"
+	"yaliv/dating-app-api/internal/handlers/registration/registrationform"
 	"yaliv/dating-app-api/internal/helpers/jsonresponse"
 )
 
@@ -22,7 +24,7 @@ func UserStatus(c *fiber.Ctx) error {
 		email = c.Params("email")
 
 		dbCtx       = context.TODO()
-		user        models.Users
+		user        models.User
 		isAvailable bool
 	)
 
@@ -39,6 +41,41 @@ func UserStatus(c *fiber.Ctx) error {
 		Data: fiber.Map{
 			"email":        email,
 			"is_available": isAvailable,
+		},
+	})
+}
+
+func Register(c *fiber.Ctx) error {
+	var (
+		payload = c.Locals("payload").(*registrationform.RegisterPayload)
+
+		dbCtx = context.TODO()
+	)
+
+	secret, err := pwdutil.Hash(payload.Password)
+	if err != nil {
+		return jsonresponse.Error(c, &jsonresponse.ErrorArgs{
+			Error: jsonresponse.ErrorProp{
+				Code:    "ERR_PASSWORD_HASHING",
+				Message: err.Error(),
+			},
+		})
+	}
+
+	newUser := models.User{
+		Email:  payload.Email,
+		Secret: secret,
+	}
+
+	err = db.Client.Insert(dbCtx, &newUser)
+	if err != nil {
+		return jsonresponse.ErrorWriteData(c, err)
+	}
+
+	return jsonresponse.Success(c, &jsonresponse.SuccessArgs{
+		Data: fiber.Map{
+			"id":    newUser.ID,
+			"email": newUser.Email,
 		},
 	})
 }

@@ -2,7 +2,9 @@ package registration
 
 import (
 	"context"
+	"errors"
 
+	"github.com/go-rel/rel"
 	"github.com/go-rel/rel/where"
 	"github.com/gofiber/fiber/v2"
 
@@ -26,7 +28,11 @@ func UserStatus(c *fiber.Ctx) error {
 
 	err := db.Client.Find(dbCtx, &user, where.Eq("email", email))
 	if err != nil {
-		isAvailable = true
+		if errors.Is(err, rel.ErrNotFound) {
+			isAvailable = true
+		} else {
+			return jsonresponse.ErrorReadData(c, err)
+		}
 	}
 
 	return jsonresponse.Success(c, &jsonresponse.SuccessArgs{

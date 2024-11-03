@@ -21,6 +21,7 @@ func Open() error {
 	}
 
 	Client = rel.New(adapter)
+	Client.Instrumentation(nil)
 
 	return nil
 }

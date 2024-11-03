@@ -109,3 +109,15 @@ func ErrorWriteData(c *fiber.Ctx, err error) error {
 
 	return Error(c, errArgs)
 }
+
+func ErrorNotFound(c *fiber.Ctx, err error) error {
+	errArgs := &ErrorArgs{
+		HttpStatus: fiber.StatusNotFound,
+		Error: ErrorProp{
+			Code:    "ERR_NOT_FOUND",
+			Message: err.Error(),
+		},
+	}
+
+	return Error(c, errArgs)
+}

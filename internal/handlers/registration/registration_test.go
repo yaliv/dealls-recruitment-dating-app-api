@@ -88,7 +88,6 @@ func TestRegister(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log("resBody:", string(resBody))
 
 	testinghelper.CheckHttpStatus(t, res.StatusCode, 200)
 	testinghelper.CheckSuccess(t, resBody)

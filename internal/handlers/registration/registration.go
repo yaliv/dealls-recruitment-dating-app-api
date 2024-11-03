@@ -66,8 +66,23 @@ func Register(c *fiber.Ctx) error {
 		Email:  payload.Email,
 		Secret: secret,
 	}
+	newUserProfile := models.UserProfile{}
 
-	err = db.Client.Insert(dbCtx, &newUser)
+	err = db.Client.Transaction(dbCtx, func(ctx context.Context) error {
+		err1 := db.Client.Insert(dbCtx, &newUser)
+		if err1 != nil {
+			return err1
+		}
+
+		newUserProfile.UserID = newUser.ID
+
+		err1 = db.Client.Insert(dbCtx, &newUserProfile)
+		if err1 != nil {
+			return err1
+		}
+
+		return nil
+	})
 	if err != nil {
 		return jsonresponse.ErrorWriteData(c, err)
 	}

@@ -88,6 +88,7 @@ func Register(c *fiber.Ctx) error {
 	}
 
 	return jsonresponse.Success(c, &jsonresponse.SuccessArgs{
+		HttpStatus: fiber.StatusCreated,
 		Data: fiber.Map{
 			"id":    newUser.ID,
 			"email": newUser.Email,

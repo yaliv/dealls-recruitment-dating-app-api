@@ -89,7 +89,7 @@ func TestRegister(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	testinghelper.CheckHttpStatus(t, res.StatusCode, 200)
+	testinghelper.CheckHttpStatus(t, res.StatusCode, 201)
 	testinghelper.CheckSuccess(t, resBody)
 
 	testinghelper.CheckData(t, resBody, testinghelper.DataTests{

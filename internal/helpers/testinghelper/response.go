@@ -21,16 +21,20 @@ func CheckHttpStatus(t *testing.T, got, want int) {
 	}
 }
 
-func CheckSuccess(t *testing.T, resBody []byte) {
+func CheckSuccess(t *testing.T, resBody []byte, want_opt ...bool) {
 	isSuccess, err := jsonparser.GetBoolean(resBody, "is_success")
-
 	if err != nil {
 		t.Error("is_success doesn't exist")
 		return
 	}
 
-	if !isSuccess {
-		t.Error("It should get a success response, but it doesn't.")
+	want := true
+	if len(want_opt) > 0 {
+		want = want_opt[0]
+	}
+
+	if isSuccess != want {
+		t.Errorf("Incorrect value of is_success, got: %v, want: %v", isSuccess, want)
 	}
 }
 

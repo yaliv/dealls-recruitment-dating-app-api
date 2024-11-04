@@ -54,3 +54,37 @@ func TestLogin(t *testing.T) {
 		"expired_at": testinghelper.PropertyTest{Type: jsonparser.String, Value: nil},
 	}, "data", "access_token")
 }
+
+func TestLoginInactive(t *testing.T) {
+	testinghelper.CompleteSetup(t)
+
+	app := fiber.New()
+
+	app.Post("/", accessform.ParseLogin, access.Login)
+
+	reqBody := map[string]any{
+		"email":    "DiamandaHornblower@dayrep.com",
+		"password": "iZ2mohghae",
+	}
+	reqBodyJson := new(bytes.Buffer)
+	json.NewEncoder(reqBodyJson).Encode(reqBody)
+
+	req := httptest.NewRequest("POST", "/", reqBodyJson)
+	req.Header.Set("Content-Type", "application/json")
+
+	res, _ := app.Test(req)
+	defer res.Body.Close()
+
+	resBody, err := io.ReadAll(res.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testinghelper.CheckHttpStatus(t, res.StatusCode, 401)
+	testinghelper.CheckSuccess(t, resBody, false)
+
+	testinghelper.CheckData(t, resBody, testinghelper.DataTests{
+		"code":    testinghelper.PropertyTest{Type: jsonparser.String, Value: "ERR_LOGIN_CREDENTIALS"},
+		"message": testinghelper.PropertyTest{Type: jsonparser.String, Value: "Invalid email and/or password, or inactive account."},
+	}, "error")
+}

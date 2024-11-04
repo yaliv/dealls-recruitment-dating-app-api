@@ -28,12 +28,12 @@ func Login(c *fiber.Ctx) error {
 			HttpStatus: fiber.StatusUnauthorized,
 			Error: jsonresponse.ErrorProp{
 				Code:    "ERR_LOGIN_CREDENTIALS",
-				Message: "Pengguna dan/atau sandi tidak valid.",
+				Message: "Invalid email and/or password, or inactive account.",
 			},
 		}
 	)
 
-	err := db.Client.Find(dbCtx, &user, where.Eq("email", payload.Email))
+	err := db.Client.Find(dbCtx, &user, where.Eq("email", payload.Email).AndNil("deactivated_at"))
 	if err != nil {
 		if errors.Is(err, rel.ErrNotFound) {
 			return jsonresponse.Error(c, credError)

@@ -7,6 +7,7 @@ import (
 	"yaliv/dating-app-api/internal/handlers/access/accessform"
 	"yaliv/dating-app-api/internal/handlers/authorization"
 	"yaliv/dating-app-api/internal/handlers/myprofile"
+	"yaliv/dating-app-api/internal/handlers/myprofile/myprofileform"
 	"yaliv/dating-app-api/internal/handlers/registration"
 	"yaliv/dating-app-api/internal/handlers/registration/registrationform"
 )
@@ -26,6 +27,7 @@ func Router() *fiber.App {
 
 	rMyProfile := r1.Group("/my-profile")
 	rMyProfile.Get("", myprofile.Show)
+	rMyProfile.Patch("", myprofileform.ParseUpdate, myprofile.Update)
 
 	return r1
 }

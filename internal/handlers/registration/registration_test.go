@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http/httptest"
+	"strconv"
 	"testing"
 
 	"github.com/buger/jsonparser"
@@ -22,9 +23,16 @@ func TestUserStatus(t *testing.T) {
 
 	app.Get("/:email", registration.UserStatus)
 
-	email1 := "MimosaBurrows@jourrapide.com"
-	t.Log(email1, "- Email address is taken.")
-	req := httptest.NewRequest("GET", "/"+email1, nil)
+	t.Run("Email address is taken", func(t *testing.T) {
+		tUserStatus(t, app, "MimosaBurrows@jourrapide.com", false)
+	})
+	t.Run("Email address is available", func(t *testing.T) {
+		tUserStatus(t, app, "MyrtleHayward@jourrapide.com", true)
+	})
+}
+
+func tUserStatus(t *testing.T, app *fiber.App, email string, isAvailable bool) {
+	req := httptest.NewRequest("GET", "/"+email, nil)
 
 	res, _ := app.Test(req)
 	defer res.Body.Close()
@@ -38,28 +46,8 @@ func TestUserStatus(t *testing.T) {
 	testinghelper.CheckSuccess(t, resBody)
 
 	testinghelper.CheckData(t, resBody, testinghelper.DataTests{
-		"email":        testinghelper.PropertyTest{Type: jsonparser.String, Value: email1},
-		"is_available": testinghelper.PropertyTest{Type: jsonparser.Boolean, Value: "false"},
-	})
-
-	email2 := "MyrtleHayward@jourrapide.com"
-	t.Log(email2, "- Email address is available.")
-	req = httptest.NewRequest("GET", "/"+email2, nil)
-
-	res, _ = app.Test(req)
-	defer res.Body.Close()
-
-	resBody, err = io.ReadAll(res.Body)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	testinghelper.CheckHttpStatus(t, res.StatusCode, 200)
-	testinghelper.CheckSuccess(t, resBody)
-
-	testinghelper.CheckData(t, resBody, testinghelper.DataTests{
-		"email":        testinghelper.PropertyTest{Type: jsonparser.String, Value: email2},
-		"is_available": testinghelper.PropertyTest{Type: jsonparser.Boolean, Value: "true"},
+		"email":        testinghelper.PropertyTest{Type: jsonparser.String, Value: email},
+		"is_available": testinghelper.PropertyTest{Type: jsonparser.Boolean, Value: strconv.FormatBool(isAvailable)},
 	})
 }
 
